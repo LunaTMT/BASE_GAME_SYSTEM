@@ -2,11 +2,10 @@
 #include <iostream>
 
 Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
-    textureHolder.load(TextureID::Snake, "assets/images/whisp.png");
+    //textureHolder.load(TextureID::Snake, "assets/images/whisp.png");
 
-    sf::Texture& snakeTexture = textureHolder.get(TextureID::Snake);
-    m_snakeSprite.setTexture(snakeTexture);
-    m_snakeSprite.setPosition(100, 100);
+    //sf::Texture& snakeTexture = textureHolder.get(TextureID::Snake);
+
 }
 
 Game::~Game() {}
@@ -23,7 +22,7 @@ void Game::HandleInput(){
 
 void Game::Render(){
     m_window.BeginDraw();
-    m_window.Draw(m_snakeSprite);
+    //m_window.Draw(m_snakeSprite);
     m_window.EndDraw();
 }
 

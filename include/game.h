@@ -4,6 +4,7 @@
 #include "soundID.hpp"
 #include <SFML/Audio.hpp>
 
+
 class Game
 {
 public:
@@ -28,7 +29,6 @@ private:
     sf::Clock m_clock;
     sf::Time m_elapsed;
 
-    sf::Sprite m_snakeSprite;
 
     
 };
