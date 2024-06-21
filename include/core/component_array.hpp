@@ -64,6 +64,8 @@ public:
         }
     }
 
+    
+
 private:
     std::array<T, MAX_ENTITIES> m_componentArray;
 
