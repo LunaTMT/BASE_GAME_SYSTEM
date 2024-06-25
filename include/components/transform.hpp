@@ -1,7 +1,7 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 
 struct Transform {
     sf::Vector2f position;

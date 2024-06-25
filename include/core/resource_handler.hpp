@@ -16,7 +16,7 @@ public:
     const Resource& get(Identifier id) const;
 
 private:
-    std::map<Identifier, std::unique_ptr<Resource>> mResourceMap;
+    std::map<Identifier, std::unique_ptr<Resource>> m_resourceMap;
 };
 
 // Implementation of member functions
@@ -30,15 +30,15 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
         throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
     }
     
-    auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
+    auto inserted = m_resourceMap.insert(std::make_pair(id, std::move(resource)));
     assert(inserted.second);
 }
 
 
 template <typename Resource, typename Identifier>
 Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) {
-    auto found = mResourceMap.find(id);
-    if (found == mResourceMap.end()) {
+    auto found = m_resourceMap.find(id);
+    if (found == m_resourceMap.end()) {
         throw std::runtime_error("ResourceHolder::get - Resource not found");
     }
     return *(found->second);
@@ -46,8 +46,8 @@ Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) {
 
 template <typename Resource, typename Identifier>
 const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const {
-    auto found = mResourceMap.find(id);
-    if (found == mResourceMap.end()) {
+    auto found = m_resourceMap.find(id);
+    if (found == m_resourceMap.end()) {
         throw std::runtime_error("ResourceHolder::get - Resource not found");
     }
     return *(found->second);

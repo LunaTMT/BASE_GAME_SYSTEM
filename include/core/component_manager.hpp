@@ -13,9 +13,9 @@ public:
     void RegisterComponent(){
         const char* typeID = typeid(T).name();
 
-        assert(mCompontentTypes.find(typeID) == mCompontentTypes.end() && "Registering component type more than once."); 
+        assert(m_componentTypes.find(typeID) == m_componentTypes.end() && "Registering component type more than once."); 
         
-        m_componentTypes.insert({typeID, m_nextComponentType})
+        m_componentTypes.insert({typeID, m_nextComponentType});
         m_componentArrays.insert({typeID, std::make_shared<ComponentArray<T>>()});
 
         m_nextComponentType++;
@@ -78,9 +78,9 @@ private:
         const char* typeID = typeid(T).name();
 
         //Assert that is exists in the registered list of component arrays
-        assert(mComponentTypes.find(typeID) != mComponentTypes.end() && "Component not registered before use.");
+        assert(m_componentTypes.find(typeID) != m_componentTypes.end() && "Component not registered before use.");
 
         //Casting the IComponentArray to its given Component Array <template> e.g. ComponentArray<Gravity> contains all gravity component signatures
-		return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[typeID]);
+		return std::static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeID]);
     }
 };

@@ -16,6 +16,7 @@
                 "${workspaceFolder}/src/world.cpp", 
                 "-I${workspaceFolder}/include",
                 "-I${workspaceFolder}/include/components",
+                "-I${workspaceFolder}/include/systems",
                 "-I${workspaceFolder}/include/core",
                 "-I${workspaceFolder}/include/IDs",
                 "-lsfml-graphics",

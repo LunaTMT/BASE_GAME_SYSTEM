@@ -8,32 +8,32 @@
 class Coordinator{
 public:
     void Init(){
-        m_ComponentManager = std::make_unique<ComponentManger>();
-        m_EntityManager    = std::make_unique<EntityManager>();
-        m_SystemManager    = std::make_unique<SystemManager>();
+        m_componentManager = std::make_unique<ComponentManger>();
+        m_entityManager    = std::make_unique<EntityManager>();
+        m_systemManager    = std::make_unique<SystemManager>();
 
     }
 
     Entity CreateEntity(){
-        return m_EntityManager->CreateEntity();
+        return m_entityManager->CreateEntity();
     }
 
     void DestroyEntity(Entity entity){
-        m_EntityManager->DestroyEntity(entity);
-        m_ComponentManager->EntityDestroyed(entity);
-        m_SystemManager->EntityDestroyed(entity);
+        m_entityManager->DestroyEntity(entity);
+        m_componentManager->EntityDestroyed(entity);
+        m_systemManager->EntityDestroyed(entity);
     }
 
     template<typename T>
     void RegisterComponent(){
-        m_ComponentManager->RegisterComponent<T>();
+        m_componentManager->RegisterComponent<T>();
     }
 
     template<typename T>
     void AddComponent(Entity entity, T component){
-        m_ComponentManager->AddComponent<T>(entity, component);
+        m_componentManager->AddComponent<T>(entity, component);
 
-        auto signature = m_EntityManager->GetSignature(entity);
+        auto signature = m_entityManager->GetSignature(entity);
         
         /*
         Optional parameter. If set to true (default), the bit at position pos is set to 1. 
@@ -45,45 +45,45 @@ public:
         Set bit at position 2 to true (1)
         bits.set(2);
         */
-        signature.set(m_ComponentManager->GetComponentType<T>(), true);
-        m_EntityManager->SetSignature(entity, signature);
-        m_SystemManager->EntitySignatureChanged(entity, signature);
+        signature.set(m_componentManager->GetComponentType<T>(), true);
+        m_entityManager->SetSignature(entity, signature);
+        m_systemManager->EntitySignatureChanged(entity, signature);
     }
 
     template<typename T>
     void RemoveComponent(Entity entity){
-        m_ComponentManager->RemoveComponent<T>(entity);
-        auto signature = m_EntityManager->GetSignature();
-        signature.set(m_ComponentManager->GetComponentType<T>(), false);
-        m_EntityManager->SetSignature(entity, signature);
-        m_SystemManager->EntitySignatureChanged(entity, signature);
+        m_componentManager->RemoveComponent<T>(entity);
+        auto signature = m_entityManager->GetSignature();
+        signature.set(m_componentManager->GetComponentType<T>(), false);
+        m_entityManager->SetSignature(entity, signature);
+        m_systemManager->EntitySignatureChanged(entity, signature);
     }
 
 
     template<typename T>
-    T& getComponent(Entity entity){
-        return m_ComponentManager->GetComponent<T>(entity);
+    T& GetComponent(Entity entity){
+        return m_componentManager->GetComponent<T>(entity);
     }
 
     template<typename T>
-    ComponentType getComponentType(){
-        return m_ComponentManager->GetComponentType<T>();
+    ComponentType GetComponentType(){
+        return m_componentManager->GetComponentType<T>();
     }
 
     template<typename T>
-    std::shared_ptr<T> ReigsterSystem(){
-        return m_SystemManager->RegisterSystem<T>();
+    std::shared_ptr<T> RegisterSystem(){
+        return m_systemManager->RegisterSystem<T>();
     }
 
     template<typename T>
     void SetSystemSignature(Signature signature){
-        m_SystemManager->SetSignature<T>(signature);
+        m_systemManager->SetSignature<T>(signature);
     }
 
 
 
 private:
-    std::unique_ptr<ComponentManger> m_ComponentManager;
-    std::unique_ptr<EntityManager> m_EntityManager;
-    std::unique_ptr<SystemManager> m_SystemManager
-}
+    std::unique_ptr<ComponentManger> m_componentManager;
+    std::unique_ptr<EntityManager> m_entityManager;
+    std::unique_ptr<SystemManager> m_systemManager;
+};

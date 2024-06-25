@@ -11,23 +11,25 @@ It declares one pure virtual function EntityDestroyed(Entity entity) = 0;. This 
 The purpose of this interface is to define a common interface for component arrays that store components associated with entities in a game engine or similar application.
 */
 
-class IComponentArray{
+
+class IComponentArray
+{
 public:
-    virtual ~IComponentArray();
+    virtual ~IComponentArray() = default;
     virtual void EntityDestroyed(Entity entity) = 0;
 };
 
 template<typename T>
-class ComponentArray : IComponentArray{
-
+class ComponentArray : public IComponentArray {
 public:
+    ComponentArray() : m_size(0) {}
+
     void InsertData(Entity entity, T component){
         assert(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end() && "Component added to same entity more than once");
-        //If this evaluates to true it means the entity does not exist in the component array, thus it doesnt have this component
 
-        size_t newIndex = m_size
-        m_entityToIndexMap[entity] = index;
-        m_indexToEntityMap[index] = entity;
+        size_t newIndex = m_size;
+        m_entityToIndexMap[entity] = newIndex;
+        m_indexToEntityMap[newIndex] = entity;
 
         m_componentArray[newIndex] = component;
         ++m_size;
@@ -48,14 +50,14 @@ public:
         m_indexToEntityMap[removed_entity_index] = lastEntity;
 
         m_entityToIndexMap.erase(entity);
-        m_indexToEntityMap.erase(last_entity_index);
+        m_indexToEntityMap.erase(lastEntity);
 
         --m_size;
     }
 
     T& GetData(Entity entity){
         assert(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end() && "Retrieving non-existent component.");
-        return m_componentArray[m_indexToEntityMap[entity]];
+        return m_componentArray[m_entityToIndexMap[entity]];
     }
 
     void EntityDestroyed(Entity entity) override {
@@ -64,8 +66,6 @@ public:
         }
     }
 
-    
-
 private:
     std::array<T, MAX_ENTITIES> m_componentArray;
 
@@ -73,5 +73,4 @@ private:
     std::unordered_map<size_t, Entity> m_indexToEntityMap;
 
     size_t m_size;
-    
 };
