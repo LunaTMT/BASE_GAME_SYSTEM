@@ -1,5 +1,4 @@
-#ifndef TRANSFORM_H
-#define TRANSFORM_H
+#pragma once
 
 #include <SFML/System/Vector2.hpp>
 
@@ -10,4 +9,3 @@ struct Transform {
 };
 
 
-#endif // TRANSFORM_H

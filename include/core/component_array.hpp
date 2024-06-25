@@ -1,7 +1,7 @@
 #pragma once
 
+#include <cassert>
 #include "types.hpp"
-
 #include <unordered_map>
 
 /*

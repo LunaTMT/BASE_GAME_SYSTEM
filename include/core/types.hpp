@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <bitset>
 #include <cstdint> // Ensure <cstdint> is included for fixed-width integer types
 
@@ -16,20 +15,3 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 
 
 
-// Component representing gravity
-struct Gravity {
-    sf::Vector2f force; // Use sf::Vector2f for consistency with SFML
-};
-
-// Component representing a rigid body in physics
-struct RigidBody {
-    sf::Vector2f velocity;
-    sf::Vector2f acceleration;
-};
-
-// Component representing the transform (position, rotation, scale) of an entity
-struct Transform {
-    sf::Vector2f position;
-    sf::Vector2f rotation;
-    sf::Vector2f scale;
-};

@@ -1,15 +1,24 @@
 #include "window.h"
-#include "resource_handler.hpp"
-#include "textureID.hpp" 
-#include "soundID.hpp"
-#include <SFML/Audio.hpp>
 
-//#include "types.hpp"
-#include "coordinator.hpp"
-#include <SFML/Graphics.hpp>
+#include "resource_handler.hpp"
+#include "textureID.hpp"
+#include "soundID.hpp"
+
+#include "types.hpp"
 
 #include "physics_system.hpp"
+#include "render_system.hpp"
 
+
+#include "globals.hpp"
+
+
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+
+#include <iostream>
+#include <random>
+#include <chrono>
 
 class Game
 {
@@ -29,17 +38,13 @@ public:
     ResourceHolder<sf::Texture, TextureID> textureHolder;
     ResourceHolder<sf::Sound, SoundID> soundHolder;
 
-    
-
 private:
-
     Window m_window;
     sf::Clock m_clock;
     sf::Time m_elapsed;
 
-    Coordinator m_coordinator;
-
     std::shared_ptr<PhysicsSystem> m_physicsSystem;
+    std::shared_ptr<RenderSystem>  m_renderSystem;
 
-    
+    sf::RectangleShape m_rectangle;
 };

@@ -3,28 +3,70 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "C/C++: g++ build active file",
+            "label": "C/C++: g++ build",
             "command": "g++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${workspaceFolder}/main.cpp",
+                "${workspaceFolder}/src/game.cpp",
+                "${workspaceFolder}/src/window.cpp",
+                "${workspaceFolder}/src/world.cpp",
                 "-o",
                 "${workspaceFolder}/main",
-                "${workspaceFolder}/src/game.cpp", 
-                "${workspaceFolder}/src/window.cpp", 
-                "${workspaceFolder}/src/world.cpp", 
                 "-I${workspaceFolder}/include",
                 "-I${workspaceFolder}/include/components",
-                "-I${workspaceFolder}/include/systems",
                 "-I${workspaceFolder}/include/core",
+                "-I${workspaceFolder}/include/globals",
                 "-I${workspaceFolder}/include/IDs",
+                "-I${workspaceFolder}/include/systems",
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "Compile and link all source files into 'main'"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: clang build active file",
+            "command": "/usr/bin/clang",
+            "args": [
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compiler: /usr/bin/clang"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
             },
             "problemMatcher": [
                 "$gcc"

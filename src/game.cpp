@@ -1,27 +1,31 @@
 #include "game.h"
-#include <iostream>
-
-#include <random>
-#include <chrono>
-
 
 
 Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
-    m_coordinator.Init();
+    gCoordinator.Init();
 
-    m_coordinator.RegisterComponent<Gravity>();
-    m_coordinator.RegisterComponent<RigidBody>();
-    m_coordinator.RegisterComponent<Transform>();
+    
+    gCoordinator.RegisterComponent<Gravity>();
+    gCoordinator.RegisterComponent<RigidBody>();
+    gCoordinator.RegisterComponent<Transform>();
+    gCoordinator.RegisterComponent<Rendering>();
 
-    m_physicsSystem = m_coordinator.RegisterSystem<PhysicsSystem>();
+    m_physicsSystem = gCoordinator.RegisterSystem<PhysicsSystem>();
+    m_renderSystem  = gCoordinator.RegisterSystem<RenderSystem>();
 
-    Signature signature;
-	signature.set(m_coordinator.GetComponentType<Gravity>());
-	signature.set(m_coordinator.GetComponentType<RigidBody>());
-	signature.set(m_coordinator.GetComponentType<Transform>());
-	m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
+    Signature physicsSignature;
+	physicsSignature.set(gCoordinator.GetComponentType<Gravity>());
+	physicsSignature.set(gCoordinator.GetComponentType<RigidBody>());
+	physicsSignature.set(gCoordinator.GetComponentType<Transform>());
+    gCoordinator.SetSystemSignature<PhysicsSystem>(physicsSignature);
 
-	std::vector<Entity> entities(MAX_ENTITIES);
+
+
+    Signature renderSignature;
+	renderSignature.set(gCoordinator.GetComponentType<Rendering>());
+    gCoordinator.SetSystemSignature<RenderSystem>(renderSignature);
+
+
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -29,32 +33,38 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
 	std::uniform_real_distribution<float> randScale(3.0f, 5.0f);
 	std::uniform_real_distribution<float> randGravity(-10.0f, -1.0f);
 
-	float scale = randScale(generator);
+    std::uniform_real_distribution<float> randVelocity(-10.0f, 10.0f);
+    std::uniform_real_distribution<float> randAcceleration(-5.0f, 5.0f);
 
-    for (auto& entity : entities)
+    for (int _ = 0; _ < 10; ++_) 
     {
-        entity = m_coordinator.CreateEntity();
+        u_int32_t entity = gCoordinator.CreateEntity();
+        float scale = randScale(generator);
 
-        m_coordinator.AddComponent(
+        gCoordinator.AddComponent(
             entity,
             Gravity{
                 sf::Vector2f(0.0f, randGravity(generator))
             });
 
-        m_coordinator.AddComponent(
+        gCoordinator.AddComponent(
             entity,
             RigidBody{
-                sf::Vector2f(0.0f, 0.0f),
-                sf::Vector2f(0.0f, 0.0f)
+                sf::Vector2f(randVelocity(generator), randVelocity(generator)),
+                sf::Vector2f(randAcceleration(generator), randAcceleration(generator))
             });
 
-        m_coordinator.AddComponent(
+        gCoordinator.AddComponent(
             entity,
             Transform{
                 sf::Vector2f(randPosition(generator), randPosition(generator)),
-                sf::Vector2f(randPosition(generator), randPosition(generator)),
+                randRotation(generator),
                 sf::Vector2f(scale, scale)
             });
+
+        gCoordinator.AddComponent(
+            entity, 
+            Rendering{}); 
     }
 }
 
@@ -78,6 +88,12 @@ void Game::HandleInput(){
 void Game::Render(){
     m_window.BeginDraw();
     //m_window.Draw(m_snakeSprite);
+
+    m_renderSystem->Render(m_window.GetRenderWindow());
+    
+
+
+
     m_window.EndDraw();
 }
 
