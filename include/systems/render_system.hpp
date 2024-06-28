@@ -21,8 +21,7 @@ public:
             render.rectangle.setRotation(transform.rotation);
             render.rectangle.setScale(transform.scale);
 
-            render.rectangle.move(rigidbody.velocity);
-
+       
 
             // Draw the rectangle
             window.draw(render.rectangle);
