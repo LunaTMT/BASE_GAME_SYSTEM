@@ -21,8 +21,6 @@ public:
             render.rectangle.setRotation(transform.rotation);
             render.rectangle.setScale(transform.scale);
 
-       
-
             // Draw the rectangle
             window.draw(render.rectangle);
         }

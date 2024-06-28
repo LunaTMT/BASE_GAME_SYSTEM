@@ -48,18 +48,20 @@ private:
     std::shared_ptr<PhysicsSystem> m_physicsSystem;
     std::shared_ptr<RenderSystem>  m_renderSystem;
 
-    sf::RectangleShape m_rectangle;
+    //For fixed timestep
+    sf::Time m_timePerFrame = sf::seconds(1.0f / 60.0f);
+    sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
 
     
+    
+    
+    //Test
 
     // Load a font
     sf::Font m_font;
     sf::Text m_fps_text;
     int m_fps = 0;
 
-    sf::Time m_timePerFrame = sf::seconds(1.0f / 60.0f);
-    sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
 
 
-    float elapsed_time = 0.0f;
 };

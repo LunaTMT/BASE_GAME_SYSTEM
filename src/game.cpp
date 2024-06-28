@@ -1,7 +1,7 @@
 #include "game.h"
 
 
-Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
+Game::Game(): m_window("Tut", sf::Vector2u(WINDOW_WIDTH,WINDOW_HEIGHT)) {
     gCoordinator.Init();
 
     
@@ -19,12 +19,9 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
 	physicsSignature.set(gCoordinator.GetComponentType<Transform>());
     gCoordinator.SetSystemSignature<PhysicsSystem>(physicsSignature);
 
-
-
     Signature renderSignature;
 	renderSignature.set(gCoordinator.GetComponentType<Rendering>());
     gCoordinator.SetSystemSignature<RenderSystem>(renderSignature);
-
 
 
 	std::default_random_engine generator;
@@ -37,7 +34,7 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
     std::uniform_real_distribution<float> randAcceleration(-2.0f, 2.0f);
 
 
-    for (int _ = 0; _ < 100; ++_) 
+    for (int _ = 0; _ < 1000; ++_) 
     {
         u_int32_t entity = gCoordinator.CreateEntity();
         float scale = randScale(generator);
@@ -51,7 +48,7 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
         gCoordinator.AddComponent(
             entity,
             RigidBody{
-                sf::Vector2f(randVelocity(generator), randVelocity(generator)),
+                sf::Vector2f(randVelocity(generator), randPosition(generator)),
                 sf::Vector2f(randAcceleration(generator), randAcceleration(generator))
             });
 
@@ -60,7 +57,7 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
             Transform{
                 //sf::Vector2f(randPosition(generator), randPosition(generator)),
                 sf::Vector2f(400, 300),
-                randRotation(generator),
+                0.0f, //randRotation(generator),
                 sf::Vector2f(randScale(generator), randScale(generator))
             });
 
