@@ -60,7 +60,7 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
             Transform{
                 //sf::Vector2f(randPosition(generator), randPosition(generator)),
                 sf::Vector2f(400, 300),
-                randRotation(generator),
+                0.0f, //randRotation(generator),
                 sf::Vector2f(randScale(generator), randScale(generator))
             });
 

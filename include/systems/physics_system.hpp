@@ -6,6 +6,7 @@
 #include "gravity.hpp"
 #include "rigidbody.hpp"
 #include "transform.hpp"
+#include "render.hpp"
 
 #include <iostream>
 
@@ -15,23 +16,47 @@ class PhysicsSystem : public System {
 
 public:
     void Init() {};
- 
-    void Update(float dt)
-    {
-        for (auto const& entity : m_entities)
-        {
+
+    void Update(float dt) {
+        for (auto const& entity : m_entities) {
             auto& rigidBody = gCoordinator.GetComponent<RigidBody>(entity);
             auto& transform = gCoordinator.GetComponent<Transform>(entity);
             auto const& gravity = gCoordinator.GetComponent<Gravity>(entity);
+            auto const& render = gCoordinator.GetComponent<Rendering>(entity);
 
+            // Apply gravity and acceleration to velocity
             rigidBody.velocity += gravity.force * dt;
             rigidBody.velocity += rigidBody.acceleration * dt;
 
+            // Update position based on velocity
             transform.position += rigidBody.velocity * dt;
-            
-            
-            //std::cout << rigidBody.velocity.x << " " << rigidBody.velocity.y << "   " <<  transform.position.x << " " <<  transform.position.y << " " << dt << std::endl;
-            //std::cin.get();
+
+            // Collision detection with screen boundaries
+
+            // Get global bounding rectangle
+            sf::FloatRect bounds = render.rectangle.getGlobalBounds();
+
+            // X-axis collision
+            if (bounds.left < 0) {
+                transform.position.x = 0; 
+                rigidBody.velocity.x *= -1; 
+            } else if (bounds.left + bounds.width > WINDOW_WIDTH) {
+                transform.position.x = WINDOW_WIDTH - bounds.width; 
+                rigidBody.velocity.x *= -1; 
+            }
+
+            // Y-axis collision
+            if (bounds.top < 0) {
+                transform.position.y = 0; 
+                rigidBody.velocity.y *= -1; 
+            } else if (bounds.top + bounds.height > WINDOW_HEIGHT) {
+                transform.position.y = WINDOW_HEIGHT - bounds.height; 
+                rigidBody.velocity.y *= -1; 
+            }
+
+
         }
     }
+
+
 };
