@@ -24,9 +24,14 @@ public:
             auto& transform = gCoordinator.GetComponent<Transform>(entity);
             auto const& gravity = gCoordinator.GetComponent<Gravity>(entity);
 
-            transform.position += rigidBody.velocity * dt;
             rigidBody.velocity += gravity.force * dt;
+            rigidBody.velocity += rigidBody.acceleration * dt;
 
+            transform.position += rigidBody.velocity * dt;
+            
+            
+            //std::cout << rigidBody.velocity.x << " " << rigidBody.velocity.y << "   " <<  transform.position.x << " " <<  transform.position.y << " " << dt << std::endl;
+            //std::cin.get();
         }
     }
 };

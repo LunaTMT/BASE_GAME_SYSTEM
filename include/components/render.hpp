@@ -18,27 +18,9 @@ struct Rendering {
         // Generate random color
         sf::Color randomColor(randCol(gen), randCol(gen), randCol(gen));
         rectangle.setFillColor(randomColor); // Set random color to the rectangle
-
+        rectangle.setPosition(sf::Vector2f(300, 200));
         rectangle.setSize(sf::Vector2f(randSize(gen), randSize(gen)));
     }
 };
 
 
-/*
-#pragma once
-
-
-struct Rendering {
-    sf::RectangleShape rectangle; // Declare sf::RectangleShape member
-    
-    std::random_device rd;
-    std::mt19937 gen;
-    std::uniform_int_distribution<int> dis; // Range for RGB values (0-255)
-
-    Rendering() :  rectangle(sf::Vector2f(200, 100)), gen(rd()), dis(0, 255) {
-        // Generate random RGB values
-        sf::Color randomColor(dis(gen), dis(gen), dis(gen));
-        rectangle.setFillColor(randomColor);
-    }
-};
-*/

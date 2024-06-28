@@ -54,5 +54,6 @@
         "set": "cpp",
         "bitset": "cpp",
         "cinttypes": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc"
 }

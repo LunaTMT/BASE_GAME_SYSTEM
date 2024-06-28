@@ -9,12 +9,7 @@ int main(int argc, char** argv){
     Game game;
     
     try{    
-        while(!game.GetWindow()->IsDone()){
-            game.HandleInput();
-            game.Update();
-            game.Render();
-            game.RestartClock();
-        }
+        game.Run();
     } catch (...) {
         std::cout << "" << std::endl;
     }
