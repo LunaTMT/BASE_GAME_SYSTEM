@@ -1,17 +1,12 @@
 #include "window.h"
-
-#include "resource_handler.hpp"
-#include "textureID.hpp"
-#include "soundID.hpp"
-
 #include "types.hpp"
 
 #include "physics_system.hpp"
 #include "render_system.hpp"
 
 #include "globals.hpp"
-#include "textureID.hpp"
-#include "soundID.hpp"
+
+#include "willow.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -37,10 +32,11 @@ public:
     sf::Time GetElapsed();
     void RestartClock();
 
-    ResourceHolder<sf::Texture, TextureID> m_textureHolder;
-    ResourceHolder<sf::Sound, SoundID> m_soundHolder;
+    
 
 private:
+    
+
     Window m_window;
     sf::Clock m_clock;
     sf::Time m_elapsed;
@@ -54,17 +50,18 @@ private:
     sf::Time m_timePerFrame = sf::seconds(1.0f / 60.0f);
     sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
 
-    
+    //ResourceHolder<sf::Texture, TextureID> textureHolder;
+    //ResourceHolder<sf::Sound, SoundID> soundHolder;
 
     //experiments
-
+    Willow m_willow;
+    
 
     // Load a font
     sf::Font m_font;
     sf::Text m_fps_text;
     int m_fps = 0;
 
-    
 
     sf::Texture m_dvd_texture;  
 

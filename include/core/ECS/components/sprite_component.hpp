@@ -3,14 +3,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-struct Rendering {
+struct Sprite {
     sf::Sprite sprite;
 
     // Default constructor
-    Rendering() = default;
+    Sprite() = default;
 
     // Constructor with texture parameter
-    Rendering(const sf::Texture& texture) {
+    Sprite(const sf::Texture& texture) {
         sprite.setTexture(texture);
     }
 };

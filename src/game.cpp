@@ -3,31 +3,31 @@
 
 Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
     
-    m_textureHolder.load(TextureID::DVD, "assets/images/whisp.png");
     
-    
-    gCoordinator.Init();
 
-    
-    gCoordinator.RegisterComponent<Gravity>();
-    gCoordinator.RegisterComponent<RigidBody>();
-    gCoordinator.RegisterComponent<Transform>();
-    gCoordinator.RegisterComponent<Rendering>();
 
-    m_physicsSystem = gCoordinator.RegisterSystem<PhysicsSystem>();
-    m_renderSystem  = gCoordinator.RegisterSystem<RenderSystem>();
+    g_textureHolder.load(TextureID::WILLOW, "assets/images/whisp.png");
 
+    g_coordinator.RegisterComponent<Gravity>();
+    g_coordinator.RegisterComponent<RigidBody>();
+    g_coordinator.RegisterComponent<Transform>();
+    g_coordinator.RegisterComponent<Sprite>();
+
+    //Register Systems
+    m_physicsSystem = g_coordinator.RegisterSystem<PhysicsSystem>();
+    m_renderSystem  = g_coordinator.RegisterSystem<RenderSystem>();
+
+    //Add components that the systems monitor (signature and set bitmap)
     Signature physicsSignature;
-	physicsSignature.set(gCoordinator.GetComponentType<Gravity>());
-	physicsSignature.set(gCoordinator.GetComponentType<RigidBody>());
-	physicsSignature.set(gCoordinator.GetComponentType<Transform>());
-    gCoordinator.SetSystemSignature<PhysicsSystem>(physicsSignature);
-
+	physicsSignature.set(g_coordinator.GetComponentType<Gravity>());
+	physicsSignature.set(g_coordinator.GetComponentType<RigidBody>());
+	physicsSignature.set(g_coordinator.GetComponentType<Transform>());
+    g_coordinator.SetSystemSignature<PhysicsSystem>(physicsSignature);
 
 
     Signature renderSignature;
-	renderSignature.set(gCoordinator.GetComponentType<Rendering>());
-    gCoordinator.SetSystemSignature<RenderSystem>(renderSignature);
+	renderSignature.set(g_coordinator.GetComponentType<Sprite>());
+    g_coordinator.SetSystemSignature<RenderSystem>(renderSignature);
 
 
 
@@ -41,25 +41,26 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
     std::uniform_real_distribution<float> randAcceleration(-2.0f, 2.0f);
 
 
-    for (int _ = 0; _ < 1; ++_) 
+
+    for (int _ = 0; _ < 0; ++_) 
     {
-        u_int32_t entity = gCoordinator.CreateEntity();
+        u_int32_t entity = g_coordinator.CreateEntity();
         float scale = randScale(generator);
 
-        gCoordinator.AddComponent(
+        g_coordinator.AddComponent(
             entity,
             Gravity{
                 sf::Vector2f(0.0f, randGravity(generator))
             });
 
-        gCoordinator.AddComponent(
+        g_coordinator.AddComponent(
             entity,
             RigidBody{
                 sf::Vector2f(randVelocity(generator), randVelocity(generator)),
                 sf::Vector2f(randAcceleration(generator), randAcceleration(generator))
             });
 
-        gCoordinator.AddComponent(
+        g_coordinator.AddComponent(
             entity,
             Transform{
                 //sf::Vector2f(randPosition(generator), randPosition(generator)),
@@ -68,9 +69,9 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
                 sf::Vector2f(randScale(generator), randScale(generator))
             });
 
-        gCoordinator.AddComponent(
+        g_coordinator.AddComponent(
             entity, 
-            Rendering{m_textureHolder.get(TextureID::DVD)
+            Sprite{g_textureHolder.get(TextureID::WILLOW)
             });
     }
 
@@ -129,7 +130,7 @@ void Game::HandleInput(){
 void Game::Render(){
     m_window.BeginDraw();
 
-    //m_window.Draw(m_fps_text);
+
     m_renderSystem->Render(m_window.GetRenderWindow());
     
 

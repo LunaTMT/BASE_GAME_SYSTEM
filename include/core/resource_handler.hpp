@@ -34,7 +34,6 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
     assert(inserted.second);
 }
 
-
 template <typename Resource, typename Identifier>
 Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) {
     auto found = m_resourceMap.find(id);

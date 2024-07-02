@@ -4,7 +4,7 @@
 
 enum class TextureID {
     DVD,
-    whisp
+    WILLOW
 };
 
 #endif

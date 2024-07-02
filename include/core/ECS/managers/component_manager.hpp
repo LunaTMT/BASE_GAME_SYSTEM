@@ -5,7 +5,7 @@
 #include <memory>
 #include "component_array.hpp"
 
-class ComponentManger{
+class ComponentManager{
 
 public:
 

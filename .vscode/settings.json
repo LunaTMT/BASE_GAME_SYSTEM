@@ -53,7 +53,8 @@
         "typeinfo": "cpp",
         "set": "cpp",
         "bitset": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "fstream": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/gcc"
 }

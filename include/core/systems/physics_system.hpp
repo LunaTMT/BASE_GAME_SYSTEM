@@ -19,10 +19,10 @@ public:
 
     void Update(float dt) {
         for (auto const& entity : m_entities) {
-            auto& rigidBody = gCoordinator.GetComponent<RigidBody>(entity);
-            auto& transform = gCoordinator.GetComponent<Transform>(entity);
-            auto const& gravity = gCoordinator.GetComponent<Gravity>(entity);
-            auto const& render = gCoordinator.GetComponent<Rendering>(entity);
+            auto& rigidBody = g_coordinator.GetComponent<RigidBody>(entity);
+            auto& transform = g_coordinator.GetComponent<Transform>(entity);
+            auto const& gravity = g_coordinator.GetComponent<Gravity>(entity);
+            auto const& render = g_coordinator.GetComponent<Sprite>(entity);
 
             // Apply gravity and acceleration to velocity
             rigidBody.velocity += gravity.force * dt;

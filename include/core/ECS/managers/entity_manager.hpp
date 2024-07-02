@@ -13,18 +13,16 @@ class EntityManager{
         };
     
 
-        Entity CreateEntity() {
-            if (m_livingEntityCount >= MAX_ENTITIES) {
-                throw std::runtime_error("Too many entities in existence. MAX_ENTITIES: " + std::to_string(MAX_ENTITIES) + " Current living entities: " + std::to_string(m_livingEntityCount));
-            }
+        Entity CreateEntity(){
+            assert(m_livingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 
-            // Get an available entity and return its ID
+            //Get an avaialble entitiy and return its ID
             Entity id = m_availableEntities.front();
             m_availableEntities.pop();
             ++m_livingEntityCount;
 
-            return id;
-        }
+            return id; 
+        };
 
         void DestroyEntity(Entity entity){
             assert(entity < MAX_ENTITIES && "Entity out of range");
@@ -44,10 +42,9 @@ class EntityManager{
         };
 
 
-        Signature GetSignature();
 
     private:
         std::queue<Entity> m_availableEntities{};
         std::array<Signature, MAX_ENTITIES> m_signatures{};
-        std::uint32_t m_livingEntityCount = 0;
+        std::uint32_t m_livingEntityCount;
 };
