@@ -3,10 +3,10 @@
 #include "globals.hpp" 
 #include "system.hpp"
 
-#include "gravity.hpp"
-#include "rigidbody.hpp"
-#include "transform.hpp"
-#include "render.hpp"
+#include "gravity_component.hpp"
+#include "rigidbody_component.hpp"
+#include "transform_component.hpp"
+#include "sprite_component.hpp"
 
 #include <iostream>
 
@@ -34,7 +34,7 @@ public:
             // Collision detection with screen boundaries
 
             // Get global bounding rectangle
-            sf::FloatRect bounds = render.rectangle.getGlobalBounds();
+            sf::FloatRect bounds = render.sprite.getGlobalBounds();
 
             // X-axis collision
             if (bounds.left < 0) {

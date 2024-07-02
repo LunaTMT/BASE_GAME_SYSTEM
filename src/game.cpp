@@ -2,6 +2,10 @@
 
 
 Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
+    
+    m_textureHolder.load(TextureID::DVD, "assets/images/whisp.png");
+    
+    
     gCoordinator.Init();
 
     
@@ -33,11 +37,11 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
 	std::uniform_real_distribution<float> randScale(3.0f, 5.0f);
 	std::uniform_real_distribution<float> randGravity(-1.0f, 1.0f);
 
-    std::uniform_real_distribution<float> randVelocity(-5.0, 5.0f);
+    std::uniform_real_distribution<float> randVelocity(20.0f, 50.0f);
     std::uniform_real_distribution<float> randAcceleration(-2.0f, 2.0f);
 
 
-    for (int _ = 0; _ < 100; ++_) 
+    for (int _ = 0; _ < 1; ++_) 
     {
         u_int32_t entity = gCoordinator.CreateEntity();
         float scale = randScale(generator);
@@ -66,21 +70,9 @@ Game::Game(): m_window("Tut", sf::Vector2u(800,600)) {
 
         gCoordinator.AddComponent(
             entity, 
-            Rendering{}); 
+            Rendering{m_textureHolder.get(TextureID::DVD)
+            });
     }
-
-
-    if (!m_font.loadFromFile("assets/fonts/Quicksand-Bold.otf")) {
-        std::cerr << "Error loading font" << std::endl;
-    }
-
-
-    m_fps_text.setFont(m_font); // Set the font
-    m_fps_text.setString(std::to_string(m_fps));
-    m_fps_text.setCharacterSize(64); // Set the character size in pixels
-    m_fps_text.setFillColor(sf::Color::White); // Set the text color
-    m_fps_text.setPosition(400.f, 300.f); // Set the position
-
 
 }
 

@@ -3,8 +3,8 @@
 #include "system.hpp"
 
 #include <iostream>
-#include "render.hpp"
-#include "transform.hpp"
+#include "sprite_component.hpp"
+#include "transform_component.hpp"
 
 
 class RenderSystem : public System {
@@ -17,14 +17,14 @@ public:
             auto& rigidbody = gCoordinator.GetComponent<RigidBody>(entity);
 
             // Apply transform data to the render rectangle
-            render.rectangle.setPosition(transform.position);
-            render.rectangle.setRotation(transform.rotation);
-            render.rectangle.setScale(transform.scale);
-
-       
+            render.sprite.setPosition(transform.position);
+            render.sprite.setRotation(transform.rotation);
+            render.sprite.setScale(transform.scale);
+           
 
             // Draw the rectangle
-            window.draw(render.rectangle);
+            window.draw(render.sprite);
+            
         }
     }
 };

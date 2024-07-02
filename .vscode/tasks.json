@@ -17,6 +17,7 @@
                 "-I${workspaceFolder}/include",
                 "-I${workspaceFolder}/include/components",
                 "-I${workspaceFolder}/include/core",
+                "-I${workspaceFolder}/include/core/ECS",
                 "-I${workspaceFolder}/include/globals",
                 "-I${workspaceFolder}/include/IDs",
                 "-I${workspaceFolder}/include/systems",

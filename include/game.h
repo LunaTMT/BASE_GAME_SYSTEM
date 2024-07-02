@@ -9,9 +9,9 @@
 #include "physics_system.hpp"
 #include "render_system.hpp"
 
-
 #include "globals.hpp"
-
+#include "textureID.hpp"
+#include "soundID.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -37,8 +37,8 @@ public:
     sf::Time GetElapsed();
     void RestartClock();
 
-    ResourceHolder<sf::Texture, TextureID> textureHolder;
-    ResourceHolder<sf::Sound, SoundID> soundHolder;
+    ResourceHolder<sf::Texture, TextureID> m_textureHolder;
+    ResourceHolder<sf::Sound, SoundID> m_soundHolder;
 
 private:
     Window m_window;
@@ -50,16 +50,23 @@ private:
 
     sf::RectangleShape m_rectangle;
 
+    //Used for fixed time step (dt)
+    sf::Time m_timePerFrame = sf::seconds(1.0f / 60.0f);
+    sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
+
     
+
+    //experiments
+
 
     // Load a font
     sf::Font m_font;
     sf::Text m_fps_text;
     int m_fps = 0;
 
-    sf::Time m_timePerFrame = sf::seconds(1.0f / 60.0f);
-    sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
+    
+
+    sf::Texture m_dvd_texture;  
 
 
-    float elapsed_time = 0.0f;
 };

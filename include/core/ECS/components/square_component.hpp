@@ -4,10 +4,10 @@
 #include <SFML/Graphics/Color.hpp>
 #include <random>
 
-struct Rendering {
+struct RenderingSquare {
     sf::RectangleShape rectangle; // Declare sf::RectangleShape member
     
-    Rendering()  
+    RenderingSquare()  
     {
         // Random number generation setup
         std::random_device rd;

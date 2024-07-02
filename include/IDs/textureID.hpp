@@ -3,10 +3,8 @@
 #define TEXTUREID_HPP
 
 enum class TextureID {
-    Snake,
-    Grass,
-    Head, 
-    Tail
+    DVD,
+    whisp
 };
 
 #endif
